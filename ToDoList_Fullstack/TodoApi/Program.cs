@@ -3,6 +3,7 @@ using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 var connectionString = builder.Configuration["ToDoDB"];
 
 builder.Services.AddDbContext<ToDoDbContext>(options =>
