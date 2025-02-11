@@ -2,6 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration["ToDoDB"];
+
+builder.Services.AddDbContext<ToDoDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -10,11 +18,6 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
-});
-builder.Services.AddDbContext<ToDoDbContext>(options =>
-{
-    string connectionString = builder.Configuration.GetConnectionString("ToDoDB");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
