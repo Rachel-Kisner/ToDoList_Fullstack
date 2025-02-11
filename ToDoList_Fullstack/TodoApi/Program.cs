@@ -35,8 +35,7 @@ app.MapGet("/", (ToDoDbContext db) => "Server is running!");
 
 app.MapGet("/tasks", async (ToDoDbContext db) =>
 {
-    var tasks = await db.Items.ToListAsync();
-    return Results.Ok(tasks);
+   return await db.Items.ToListAsync();
 });
 
 
@@ -55,6 +54,7 @@ app.MapPut("/tasks/{id}", async ( int id, Item updateItem,ToDoDbContext db) =>
     task.Name = updateItem.Name;
     task.IsComplete = updateItem.IsComplete;
     await db.SaveChangesAsync();
+    Console.WriteLine("task updated successfully");
     return Results.Ok(task);
 });
 
