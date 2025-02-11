@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = apiUrl;
 
 axios.interceptors.response.use(
-  (response) => response,
+  response => response,
   (error) => {
     console.error("API Error:", error.response ? error.response.data : error.message);
     return Promise.reject(error);
@@ -11,31 +12,23 @@ axios.interceptors.response.use(
 );
 
 export default {
-  // getTasks: async () => {
-  //   const result = await axios.get('/tasks');    
-  //   return result.data;
-    
-  // },
   getTasks: async () => {
-    try {
-      const result = await axios.get('/tasks');
-      return result.data;
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      throw error; 
-    }
+    const result = await axios.get(`${apiUrl}/tasks`);    
+    return result.data;
+    
   },
-  
 
   addTask: async(item)=>{
     console.log('addTask', item)
-    const result = await axios.post('/tasks', item)
+    const result = await axios.post(`${apiUrl}/tasks`, {item})
     return result.data;
   },
 
-  setCompleted: async(id, isComplete)=>{
-    console.log('setCompleted', {id, isComplete})
-    const result = await axios.put(`/tasks/${id}`, {isComplete})
+  setCompleted: async(id, isComplete, name)=>{
+    const result = await axios.put(`${apiUrl}/tasks/${id}`, {
+      isComplete,
+      Name:name
+    });
     return result.data;
   },
 

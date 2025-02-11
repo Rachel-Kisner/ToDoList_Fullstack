@@ -29,15 +29,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
-app.MapGet("/", () => "Hello World!");
-
-app.MapGet("/tasks/{id}", async (ToDoDbContext db, int id) =>
-{
-    var task = await db.Items.FindAsync(id);
-    if (task == null)
-        return Results.NotFound();
-    return Results.Ok(task);
-});
+app.MapGet("/", (ToDoDbContext db) => "Server is running!");
 
 app.MapGet("/tasks", async (ToDoDbContext db) =>
 {
@@ -53,7 +45,7 @@ app.MapPost("/tasks", async (ToDoDbContext db, Item newItem) =>
     return Results.Created($"/tasks/{newItem.Id}", newItem);
 });
 
-app.MapPut("/tasks/{id}", async (ToDoDbContext db, int id, Item updateItem) =>
+app.MapPut("/tasks/{id}", async ( int id, Item updateItem,ToDoDbContext db) =>
 {
     var task = await db.Items.FindAsync(id);
     if (task == null)
@@ -64,13 +56,13 @@ app.MapPut("/tasks/{id}", async (ToDoDbContext db, int id, Item updateItem) =>
     return Results.Ok(task);
 });
 
-app.MapDelete("/tasks/{id}", async (ToDoDbContext db, int id) =>
+app.MapDelete("/tasks/{id}", async (int id,ToDoDbContext db) =>
 {
     var task = await db.Items.FindAsync(id);
     if (task == null)
         return Results.NotFound();
     db.Items.Remove(task);
     await db.SaveChangesAsync();
-    return Results.NoContent();
+    return Results.Ok("task deleted successfully");
 });
 app.Run();
