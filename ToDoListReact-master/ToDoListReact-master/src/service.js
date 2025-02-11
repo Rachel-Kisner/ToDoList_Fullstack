@@ -5,7 +5,7 @@ axios.defaults.baseURL = apiUrl;
 
 axios.interceptors.response.use(
   response => response,
-  (error) => {
+  error => {
     console.error("API Error:", error.response ? error.response.data : error.message);
     return Promise.reject(error);
   }
@@ -13,14 +13,16 @@ axios.interceptors.response.use(
 
 export default {
   getTasks: async () => {
+    
     const result = await axios.get(`${apiUrl}/tasks`);    
+    console.log("server-get");
     return result.data;
     
   },
 
   addTask: async(item)=>{
-    console.log('addTask', item)
     const result = await axios.post(`${apiUrl}/tasks`, {item})
+    console.log('addTask-server', item)
     return result.data;
   },
 
@@ -29,12 +31,13 @@ export default {
       isComplete,
       Name:name
     });
+    console.log("server-put");
     return result.data;
   },
 
   deleteTask:async(id)=>{
-    console.log('deleteTask', id)
     const result = await axios.delete(`/tasks/${id}`)
+    console.log('deleteTask-server', id)
     return result.data;
   }
 };

@@ -7,18 +7,21 @@ function App() {
 
   async function getTodos() {
     const todos = await service.getTasks();
+    console.log("getting");
     setTodos(todos);
   }
 
   async function createTodo(e) {
     e.preventDefault();
+    
     await service.addTask(newTodo);
+    console.log("adding", newTodo);
     setNewTodo("");//clear input
     await getTodos();//refresh tasks list (in order to see the new one)
   }
 
   async function updateCompleted(todo, isComplete) {
-    await service.setCompleted(todo.id, isComplete);
+    await service.setCompleted(todo.id, isComplete,todo.name);
     await getTodos();//refresh tasks list (in order to see the updated one)
   }
 
@@ -40,7 +43,7 @@ function App() {
         </form>
       </header>
       <section className="main" style={{ display: "block" }}>
-        <ul className="todo-list">
+        {/* <ul className="todo-list">
           {Array.isArray(todos) && todos.map(todo => {
             return (
               <li className={todo.isComplete ? "completed" : ""} key={todo.id}>
@@ -50,8 +53,35 @@ function App() {
                   <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
                 </div>
               </li>
-            );
+            ): (
+              <li>
+                <div className="view">
+                  <label>הרשימה אינה תקינה</label>
+                </div>
+              </li>
+            )
           })}
+        </ul> */}
+        <ul className="todo-list">
+          {Array.isArray(todos) ? (
+            todos.map(todo => {
+              return (
+                <li className={todo.isComplete ? "completed" : ""} key={todo.id}>
+                  <div className="view">
+                    <input className="toggle" type="checkbox" defaultChecked={todo.isComplete} onChange={(e) => updateCompleted(todo, e.target.checked)} />
+                    <label>{todo.name}</label>
+                    <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
+                  </div>
+                </li>
+              );
+            })
+          ) : (
+            <li>
+              <div className="view">
+                <label>הרשימה אינה תקינה</label>
+              </div>
+            </li>
+          )}
         </ul>
       </section>
     </section >

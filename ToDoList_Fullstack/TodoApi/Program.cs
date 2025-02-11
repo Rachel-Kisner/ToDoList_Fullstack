@@ -1,8 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using TodoApi;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 var connectionString = builder.Configuration["ToDoDB"];
 
@@ -13,16 +12,15 @@ builder.Services.AddDbContext<ToDoDbContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddDefaultPolicy(policy =>
     {
         policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -30,8 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+// app.UseHttpsRedirection();
+app.UseCors();
 
 app.MapGet("/", (ToDoDbContext db) => "Server is running!");
 
