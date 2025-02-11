@@ -43,7 +43,7 @@ function App() {
         </form>
       </header>
       <section className="main" style={{ display: "block" }}>
-        {/* <ul className="todo-list">
+        <ul className="todo-list">
           {Array.isArray(todos) && todos.map(todo => {
             return (
               <li className={todo.isComplete ? "completed" : ""} key={todo.id}>
@@ -53,16 +53,10 @@ function App() {
                   <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
                 </div>
               </li>
-            ): (
-              <li>
-                <div className="view">
-                  <label>הרשימה אינה תקינה</label>
-                </div>
-              </li>
-            )
+            );
           })}
-        </ul> */}
-        <ul className="todo-list">
+        </ul>
+        {/* <ul className="todo-list">
           {Array.isArray(todos) ? (
             todos.map(todo => {
               return (
@@ -82,7 +76,7 @@ function App() {
               </div>
             </li>
           )}
-        </ul>
+        </ul> */}
       </section>
     </section >
   );
