@@ -11,11 +11,21 @@ axios.interceptors.response.use(
 );
 
 export default {
-  getTasks: async () => {
-    const result = await axios.get('/tasks');    
-    return result.data;
+  // getTasks: async () => {
+  //   const result = await axios.get('/tasks');    
+  //   return result.data;
     
+  // },
+  getTasks: async () => {
+    try {
+      const result = await axios.get('/tasks');
+      return result.data;
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+      throw error; 
+    }
   },
+  
 
   addTask: async(item)=>{
     console.log('addTask', item)
