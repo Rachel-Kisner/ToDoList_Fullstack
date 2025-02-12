@@ -10,9 +10,14 @@ var connectionString = builder.Configuration["ToDoDB"];
 // {
 //     options.UseMySql("name=ToDoDB", ServerVersion.AutoDetect(connectionString));
 // });
+
+// builder.Services.AddDbContext<ToDoDbContext>(options =>
+//     options.UseMySql("name=ToDoDB", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")
+//     ));
+
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql("name=ToDoDB", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")
-    ));
+    options.UseMySql(builder.Configuration.GetConnectionString("ToDoDB"),
+    new MySqlServerVersion(new Version(8, 0, 41))));
 
 builder.Services.AddCors(options =>
 {
