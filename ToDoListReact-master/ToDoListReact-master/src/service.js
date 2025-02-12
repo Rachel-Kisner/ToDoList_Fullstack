@@ -22,7 +22,7 @@ export default {
 
   addTask: async(item)=>{
     const result = await axios.post(`${apiUrl}/tasks`, {item})
-    console.log('addTask-server', item)
+    console.log('addTask-client', item)
     return result.data;
   },
 
@@ -31,7 +31,7 @@ export default {
       isComplete,
       Name:name
     });
-    console.log("server-put");
+    console.log("client-put");
     return result.data;
   },
 
