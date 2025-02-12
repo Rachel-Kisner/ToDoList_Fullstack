@@ -62,11 +62,17 @@ app.MapGet("/tasks", async (ToDoDbContext db) =>
 });
 
 
-app.MapPost("/tasks", async (ToDoDbContext db, Item newItem) =>
+// app.MapPost("/tasks", async (ToDoDbContext db, Item newItem) =>
+// {
+//     db.Items.Add(newItem);
+//     await db.SaveChangesAsync();
+//     return Results.Created($"/tasks/{newItem.Id}", newItem);
+// });
+app.MapPost("/tasks", async (Item item, ToDoDbContext db) =>
 {
-    db.Items.Add(newItem);
+    await db.Items.AddAsync(item);
     await db.SaveChangesAsync();
-    return Results.Created($"/tasks/{newItem.Id}", newItem);
+    return Results.Created($"/tasks/{item.Id}", item);
 });
 
 app.MapPut("/tasks/{id}", async ( int id, bool IsComplete,ToDoDbContext db) =>

@@ -23,12 +23,21 @@ export default {
     
   },
 
-  addTask: async(item)=>{
-    const result = await axios.post(`${apiUrl}/tasks`, {item,IsComplete:false})
-    console.log('addTask-client', item)
-    return result.data;
+  // addTask: async(name)=>{
+  //   const result = await axios.post(`${apiUrl}/tasks`, {Name:name,IsComplete:false})
+  //   console.log('addTask-client', name)
+  //   return result.data;
+  // },
+  addTask: async (name) => {
+    try {
+      const result = await apiClient.post(`/tasks`, { name ,isComplete:false});
+      console.log('addTask', result.data);
+      return result.data;
+    } catch (error) {
+      console.error('Error in addTask:', error.message);
+      return {};
+    }
   },
-
   setCompleted: async(id, isComplete, name)=>{
     const result = await axios.put(`${apiUrl}/tasks/${id}?IsComplete=${isComplete}`, {
       isComplete,
