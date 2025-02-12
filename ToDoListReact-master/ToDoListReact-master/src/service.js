@@ -30,7 +30,7 @@ export default {
   // },
   addTask: async (name) => {
     try {
-      const result = await apiClient.post(`/tasks`, { name ,isComplete:false});
+      const result = await axios.post(`/tasks`, { name ,isComplete:false});
       console.log('addTask', result.data);
       return result.data;
     } catch (error) {
