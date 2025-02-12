@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = apiUrl;
+console.log("axios url"+axios.defaults.baseURL);
 
 axios.interceptors.response.use(
   response => response,
@@ -14,7 +15,9 @@ axios.interceptors.response.use(
 export default {
   getTasks: async () => {
     
-    const result = await axios.get(`${apiUrl}/tasks`);    
+    const result = await axios.get(`${apiUrl}/tasks`);   
+    console.log(`${apiUrl}/tasks`);
+     
     console.log("client-get");
     return result.data;
     
