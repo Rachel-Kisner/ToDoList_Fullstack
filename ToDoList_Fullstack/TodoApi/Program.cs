@@ -69,13 +69,13 @@ app.MapPost("/tasks", async (ToDoDbContext db, Item newItem) =>
     return Results.Created($"/tasks/{newItem.Id}", newItem);
 });
 
-app.MapPut("/tasks/{id}", async ( int id, Item updateItem,ToDoDbContext db) =>
+app.MapPut("/tasks/{id}", async ( int id, bool IsComplete,ToDoDbContext db) =>
 {
     var task = await db.Items.FindAsync(id);
     if (task == null)
         return Results.NotFound();
-    task.Name = updateItem.Name;
-    task.IsComplete = updateItem.IsComplete;
+    //task.Name = updateItem.Name;
+    task.IsComplete = IsComplete;
     await db.SaveChangesAsync();
     Console.WriteLine("task updated successfully");
     return Results.Ok(task);

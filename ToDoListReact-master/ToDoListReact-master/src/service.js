@@ -24,13 +24,13 @@ export default {
   },
 
   addTask: async(item)=>{
-    const result = await axios.post(`${apiUrl}/tasks`, {item})
+    const result = await axios.post(`${apiUrl}/tasks`, {item,IsComplete:false})
     console.log('addTask-client', item)
     return result.data;
   },
 
   setCompleted: async(id, isComplete, name)=>{
-    const result = await axios.put(`${apiUrl}/tasks/${id}`, {
+    const result = await axios.put(`${apiUrl}/tasks/${id}?IsComplete=${isComplete}`, {
       isComplete,
       Name:name
     });
