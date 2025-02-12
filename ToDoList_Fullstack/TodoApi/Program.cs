@@ -6,13 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration["ToDoDB"];
 
-builder.Services.AddDbContext<ToDoDbContext>(options =>
-{
-    options.UseMySql("name=ToDoDB", ServerVersion.AutoDetect(connectionString));
-});
 // builder.Services.AddDbContext<ToDoDbContext>(options =>
-//     options.UseMySql("name=ToDoDB", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")
-//     ));
+// {
+//     options.UseMySql("name=ToDoDB", ServerVersion.AutoDetect(connectionString));
+// });
+builder.Services.AddDbContext<ToDoDbContext>(options =>
+    options.UseMySql("name=ToDoDB", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")
+    ));
 
 builder.Services.AddCors(options =>
 {
@@ -28,15 +28,25 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 });
-
-
 var app = builder.Build();
+
+
+app.UseSwagger();
+
+// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
+});
+
 // if (app.Environment.IsDevelopment())
 // {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+   
 // }
 // app.UseHttpsRedirection();
+
+
 app.UseCors();
 
 app.MapGet("/", (ToDoDbContext db) => "Server is running!");
