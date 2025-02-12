@@ -56,27 +56,6 @@ function App() {
             );
           })}
         </ul>
-        {/* <ul className="todo-list">
-          {Array.isArray(todos) ? (
-            todos.map(todo => {
-              return (
-                <li className={todo.isComplete ? "completed" : ""} key={todo.id}>
-                  <div className="view">
-                    <input className="toggle" type="checkbox" defaultChecked={todo.isComplete} onChange={(e) => updateCompleted(todo, e.target.checked)} />
-                    <label>{todo.name}</label>
-                    <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
-                  </div>
-                </li>
-              );
-            })
-          ) : (
-            <li>
-              <div className="view">
-                <label>הרשימה אינה תקינה</label>
-              </div>
-            </li>
-          )}
-        </ul> */}
       </section>
     </section >
   );

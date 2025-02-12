@@ -14,24 +14,14 @@ axios.interceptors.response.use(
 
 export default {
   getTasks: async () => {
-    
     const result = await axios.get(`${apiUrl}/tasks`);   
-    console.log(`${apiUrl}/tasks`);
-     
-    console.log("client-get");
     return result.data;
-    
   },
 
-  // addTask: async(name)=>{
-  //   const result = await axios.post(`${apiUrl}/tasks`, {Name:name,IsComplete:false})
-  //   console.log('addTask-client', name)
-  //   return result.data;
-  // },
+
   addTask: async (name) => {
     try {
       const result = await axios.post(`/tasks`, { name ,isComplete:false});
-      console.log('addTask', result.data);
       return result.data;
     } catch (error) {
       console.error('Error in addTask:', error.message);
