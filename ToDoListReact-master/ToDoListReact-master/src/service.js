@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+// REACT_APP_API_URL=https://authserver-kmei.onrender.com
 const apiUrl = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = apiUrl;
 console.log("axios url"+axios.defaults.baseURL);
